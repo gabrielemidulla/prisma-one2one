@@ -1,0 +1,12 @@
+{
+  "name": "prisma-one2one",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "description": "This is a hacky tool to generate 1:1 relations on a list of models given a **prisma schema file path** and a **generated prisma client directory**, it works by editing the generated `index.d.ts` file and allowing 1:1 relations at runtime.",
+  "keywords": ["prisma", "database", "javascript", "typescript"],
+  "author": "Gabriele Midulla",
+  "license": "ISC"
+}
