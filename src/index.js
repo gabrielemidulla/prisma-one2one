@@ -229,17 +229,6 @@ function processDtsFile(indexDtsPath, virtualRelationsMap) {
         });
     }
 
-    // 3. Add timestamp field augmentation (simplified append)
-    const timestampAugmentation = `
-/** Timestamp Augmentation **/
-declare global { namespace PrismaTypes { interface PrismaClientTimestampFields { createdAt?: Date | string; updatedAt?: Date | string; deletedAt?: Date | string | null; created_at?: Date | string; updated_at?: Date | string; deleted_at?: Date | string | null; } } }
-type PrismaArgsWithTimestamps<T> = T extends { data: infer D } ? Omit<T, 'data'> & { data: D extends any[] ? (PrismaTypes.PrismaClientTimestampFields & D[number])[] : (PrismaTypes.PrismaClientTimestampFields & D) } : T;
-declare namespace Prisma { type StandardArgs<T, O> = T & O; interface Args<T, O> extends PrismaArgsWithTimestamps<StandardArgs<T, O>> {} }
-`;
-    if (!dtsContent.includes('PrismaClientTimestampFields')) {
-        dtsContent += timestampAugmentation;
-    }
-
     // Write if changed
     if (dtsContent !== originalDtsContent) {
         fs.writeFileSync(indexDtsPath, dtsContent, 'utf8');
